@@ -1,0 +1,72 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define NULL 0
+
+struct lista{
+	int dato;
+	struct lista* siguiente;
+};
+struct lista *LISTA;
+struct lista *ultimo;
+struct lista *aux;
+struct lista *p;
+
+int dato,i,opcion,datos;
+int posicion=0;
+int enlista();
+int impresiones();
+int captura();
+
+int main(){
+	captura();
+	enlista();
+	printf("Desea ingresar otro valor?\n");
+	printf("1.-Si\t\t2.-No\n");
+	scanf("%d",&opcion);
+	if(opcion==1){
+		main();
+	}else{
+		impresiones();
+	}
+	return 0;
+}
+int captura(){
+	printf("Ingrese el dato: \n");
+	scanf("%d",&dato);
+}
+int enlista(){
+	if(posicion==0){
+		LISTA=(struct lista*)malloc(sizeof(struct lista));
+		LISTA->dato=dato;
+		LISTA->siguiente=NULL;
+	
+		
+	}
+	if(posicion==1){
+		ultimo=(struct lista*)malloc(sizeof(struct lista));
+		ultimo->dato=dato;
+		ultimo->siguiente=NULL;
+		LISTA->siguiente=ultimo;
+		posicion++;
+	}
+	if(posicion>1){
+		aux=(struct lista*)malloc(sizeof(struct lista));
+		aux->dato=dato;
+		aux->siguiente=NULL;
+		ultimo->siguiente=aux;
+	 
+	    	
+			}
+	
+	posicion++;
+	datos=posicion;
+}
+int impresiones(){
+	p=LISTA;
+	//datos=posicion;
+	for(i=1; i<datos;i++){
+		printf("Dato en lista es: %d\n",p->dato);
+		p=p->siguiente;
+	}
+
+}
