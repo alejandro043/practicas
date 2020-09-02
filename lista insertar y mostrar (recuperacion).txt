@@ -1,0 +1,76 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<errno.h> /* códigos de error comunes: man errno */
+
+struct Lista{ /* < para tipo de dato*/
+	int 		   dato;
+	struct Lista * siguiente;
+};
+
+
+
+
+struct Lista * capturar(struct Lista *);
+struct Lista * imprimir(struct Lista *, int);
+int main(){
+int opcion=1;
+int incremento=0;
+	struct Lista * mi_lista = NULL;
+
+    /* lv = rv; */
+	/* left value = right value */
+    /* -> null */
+	while(opcion==1){
+	
+	    mi_lista = capturar( mi_lista ); /* 5 -> null */
+        printf("¿quiere asignar otro dato?\n si....1  no...2");
+        scanf("%d",&opcion);
+        incremento++;
+      };
+
+    imprimir(mi_lista, incremento);
+	
+	return 0;
+}
+
+
+/* 
+    al inicio
+*/
+
+struct Lista* capturar(struct Lista *lista){
+	int dato = 0; 					/*<<-- es temporal */
+
+	struct Lista * nuevo = NULL;
+
+	nuevo = (struct Lista *)malloc( sizeof(struct Lista) );
+
+	if( nuevo == NULL) {
+		return ENOMEM; /* código de error */
+	}
+
+	printf("Ingrese el dato: \n");
+	scanf("%d",&dato);
+
+    /* (*nuevo).dato = dato; */ 
+	nuevo->dato      = dato;
+	nuevo->siguiente = lista;
+
+    return nuevo;	
+}
+
+
+
+struct Lista *imprimir(struct Lista *lista, int limite)
+{
+	int i=0;
+struct Lista *lista_imprimir;
+	
+	lista_imprimir=lista;
+	//datos=posicion;
+	for(i=0; i<limite;i++){
+		printf("Dato en lista es: %d\n",	lista_imprimir->dato);
+			lista_imprimir=	lista_imprimir->siguiente;
+	}
+
+}
