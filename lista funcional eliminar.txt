@@ -1,0 +1,146 @@
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<errno.h> /* códigos de error comunes: man errno */
+
+struct Lista{ /* < para tipo de dato*/
+	int 		   dato;
+	struct Lista * siguiente;
+};
+
+
+
+
+struct Lista * capturar(struct Lista *);
+struct Lista * imprimir(struct Lista *, int);
+struct Lista * eliminar(struct Lista *,int);
+struct Lista * salvar(struct Lista *,struct Lista *);
+struct Lista * uniones(struct Lista *,struct Lista *);
+int main()
+   {
+     int opcion=1;
+     int incremento=0;
+     int borrar=0;
+     int posicion_dato=0;
+	 struct Lista * mi_lista = NULL;
+
+    /* lv = rv; */
+	/* left value = right value */
+    /* -> null */
+	while(opcion==1)
+	  {
+	    mi_lista = capturar( mi_lista ); /* 5 -> null */
+        printf("¿quiere asignar otro dato?\n si....1  no...2");
+        scanf("%d",&opcion);
+        incremento++;
+      };
+    
+
+    imprimir(mi_lista, incremento);
+    
+    printf("\n¿desea eliminar un dato?\n");
+    printf("\n1.... si   2....no\n");
+    scanf("%d",&borrar);
+     
+    if(borrar==1)
+      {
+      	printf("\n ¿que posicion?");
+      	scanf("%d",&posicion_dato);
+      	mi_lista=eliminar(mi_lista, posicion_dato);
+      	imprimir(mi_lista, incremento-1);
+	  }
+	
+	return 0;
+}
+
+
+
+/* 
+    al inicio
+*/
+
+  struct Lista* capturar(struct Lista *lista)
+  {
+	int dato = 0; 					/*<<-- es temporal */
+
+	struct Lista * nuevo = NULL;
+
+	nuevo = (struct Lista *)malloc( sizeof(struct Lista) );
+
+	if( nuevo == NULL) {
+		return ENOMEM; /* código de error */
+	}
+
+	printf("Ingrese el dato: \n");
+	scanf("%d",&dato);
+
+    /* (*nuevo).dato = dato; */ 
+	nuevo->dato      = dato;
+	nuevo->siguiente = lista;
+
+    return nuevo;	
+  }
+
+
+
+    struct Lista *imprimir(struct Lista *lista, int limite)
+   {
+	 int i=0;
+	 int num=1;
+	 struct Lista *lista_imprimir;
+	 lista_imprimir=lista;
+	//datos=posicion;
+	      for(i=0; i<limite;i++)
+	      {
+		    printf("Dato en lista es: %d posicion[%d]\n",	lista_imprimir->dato,num++);
+			lista_imprimir=	lista_imprimir->siguiente;
+	      }
+	
+
+   }
+
+    struct Lista * eliminar(struct Lista *lista,int dato_posicion)
+    {
+	  int contador=1;
+      struct Lista *aux_siguiente=NULL;
+      struct Lista *aux_anterior=NULL;
+      struct Lista *inicio=lista;
+
+      aux_siguiente = (struct Lista *)malloc( sizeof(struct Lista) );
+	  aux_anterior = (struct Lista *)malloc( sizeof(struct Lista) );
+
+
+
+		for( ;contador<=dato_posicion; )
+		{
+		   if(dato_posicion==1)
+		    {
+		     lista=lista->siguiente;
+			 return lista;
+			}
+		
+	       else
+		    {
+		      aux_anterior=lista;
+		      lista=lista->siguiente;
+		      aux_siguiente=lista->siguiente;
+		      
+		      contador++;
+            
+              if(contador==dato_posicion)
+              {
+              	 free(aux_anterior->siguiente);
+                 aux_anterior->siguiente=aux_siguiente;
+                 return(inicio);
+              
+	          }
+	            
+		      
+
+		    }   
+
+        }
+
+
+   }
