@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef float TipoElemento;
+typedef struct UnNodo
+  {
+   TipoElemento e;
+   struct UnNodo *sig;
+  }Nodo;
+typedef Nodo Pila;
+
+
+int EsVaciaP(Pila *P)
+  {
+    return P == NULL;
+  }
+  
+void VaciaP(Pila** P)
+  {
+   *P = NULL;
+  }
+  
+void AnadeP(Pila** P,TipoElemento e)
+  {
+   Nodo * NuevoNodo;
+   NuevoNodo = (Nodo*)malloc(sizeof(Nodo));
+   NuevoNodo -> e = e; NuevoNodo->sig= (*P);
+   *P = NuevoNodo;
+
+  }
+  
+TipoElemento PrimeroP(Pila *P)
+  {
+   TipoElemento Aux;
+   if (EsVaciaP(P))
+    {
+     puts("Se intenta sacar un elemento en pila vacía"); exit (1);
+    }
+   Aux = P->e;
+   return Aux;
+  }
+  
+void BorrarP(Pila** P)
+  {
+   Pila *NuevoNodo;
+   if (EsVaciaP(*P))
+    {
+     puts("Se intenta sacar un elemento en pila vacía");
+     exit (1);
+    }
+     NuevoNodo=(*P);
+     (*P) = NuevoNodo->sig;
+     free(NuevoNodo);
+    }
