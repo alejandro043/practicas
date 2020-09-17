@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<errno.h>
+
+struct pila{
+	char nombre;
+	struct pila * siguiente;
+};
+
+struct pila* push(struct pila*,char);
+void imprimir( struct pila*, int);
+
+
+main()
+{
+	struct pila* pila_aux=NULL;
+	pila_aux=(struct pila*)malloc(sizeof(struct pila));
+	int opcion=1;
+	int contador=0;
+	char elemento;
+	while(opcion==1)
+	 {
+
+    	printf("ingrese un dato de la pila\n");
+    	scanf("%c",&elemento);
+	    pila_aux=push(pila_aux,elemento);
+	    printf("¿\nquiere agregar otro dato?\n1...si  2...no");
+	    scanf("%d",&opcion);
+	    contador++;
+     }
+
+     imprimir(pila_aux,contador);
+}
+
+struct pila* push(struct pila* aux,char nombre)
+{
+ struct pila* pila_aux;
+ pila_aux=(struct pila*)malloc(sizeof(struct pila));
+ 
+ pila_aux->nombre=nombre;
+ pila_aux->siguiente=aux;
+ return(pila_aux);
+}
+
+
+    void imprimir(struct pila *aux, int limite)
+   {
+	 int i=1;
+	 int num=0;
+	 struct pila *pila_imprimir;
+	 pila_imprimir=aux;
+	//datos=posicion;
+	      for( ; i<=limite;i++)
+	      {
+		    printf("Dato en lista es: %c posicion[%d]\n",	pila_imprimir->nombre,num++);
+			pila_imprimir=	pila_imprimir->siguiente;
+	      }
+	
+
+   }
