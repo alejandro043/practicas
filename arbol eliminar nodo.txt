@@ -1,0 +1,154 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Arbol
+{
+	struct Arbol *derecha;
+	struct Arbol *izquierda;
+	int dato;
+};
+
+struct Arbol *insertar(struct Arbol*raiz,int dato)
+{
+	if(raiz==NULL)
+	{
+		raiz=(struct Arbol*)malloc(sizeof(struct Arbol));
+		raiz->dato=dato;
+		raiz->derecha=NULL;
+		raiz->izquierda=NULL;
+		return raiz;
+	}
+	
+	if(dato>raiz->dato)
+	{
+		raiz->derecha = insertar(raiz->derecha,dato);
+	}
+	
+	else
+	{
+		raiz->izquierda=insertar(raiz->izquierda,dato);
+	}
+	 return raiz;
+}
+
+
+int buscar(struct Arbol* raiz,int dato)
+{
+
+if(raiz==NULL)
+	return 0;
+if(dato==raiz->dato)
+    return 1;
+if(dato>raiz->dato)
+    return buscar(raiz->derecha,dato);
+    return buscar(raiz->izquierda,dato);
+}
+
+struct Arbol* nodo_principal(struct Arbol* raiz,int dato)
+{
+	struct Arbol* nodo_aux=NULL;
+	
+	if(raiz==NULL)
+	return NULL;
+	if(raiz->derecha!=NULL)
+	{	
+	  if(raiz->derecha->dato==dato)
+	  return raiz;
+    }
+    
+	if(raiz->izquierda!=NULL)
+	{
+	  if(raiz->izquierda->dato==dato)
+	  return raiz;
+    }
+	
+	if(raiz->izquierda!=NULL&&raiz->dato>dato)
+	{
+	  nodo_aux=nodo_principal(raiz.izquierda,dato);
+	}
+	
+	if(raiz->derecha!=NULL&&raiz->dato<dato)
+	{
+	  nodo_aux=nodo_principal(raiz.derecha,dato);
+	}
+	return nodo_aux;
+	
+}
+
+struct Arbol* borrar_dato(struct Arbol* raiz,int dato)
+{
+	struct Arbol*nodo=NULL;
+	
+	if(raiz==NULL)
+	  return NULL;
+	if(dato>raiz.dato)
+	  raiz.derecha=borrar_dato(raiz.derecha,dato);
+	if(dato<raiz.dato)
+	  raiz.izquierda=borrar_dato(raiz.izquierda,dato);
+	  
+	else
+	{
+		if(raiz==NULL)
+		  return NULL;
+		if(raiz.derecha!=NULL&&raiz.izquierda!=NULL)
+			{
+				nodo=nodo_principal(raiz,dato);
+				nodo.derecha=raiz.derecha;
+				nodo.izquierda=raiz.izquierda;
+				return raiz;
+			}
+		if(raiz.izquierda==NULL)
+		    {
+		        nodo=nodo_principal(raiz,dato);
+		        nodo.derecha=raiz.derecha;
+		        return raiz;
+	        }
+	    if(raiz.derecha==NULL)
+	        {
+	            nodo=nodo_principal(raiz,dato)
+	        	nodo.izquierda=raiz.izquierda;
+	        	return raiz;	
+	        }
+
+	
+    }
+}
+
+int main(void)
+{
+	int bandera=0;
+	int ops=1;
+	int dato=0;
+	struct Arbol *raiz=NULL;
+	
+	while(ops==1)
+	{
+		printf("escriba el numero\n");
+		scanf("%d",&dato);
+		raiz=insertar(raiz,dato);
+		printf("\nquiere otro dato insertar\n\n1...si     2...no\n");
+		scanf("%d",&ops);
+	}
+	
+	printf("desea buscar algun numero\n si....1	no....2\n");
+	scanf("%d",&ops);
+	
+	while(ops==1)
+	{
+		printf("que dato quieres buscar\n");
+		scanf("%d",&dato);
+		bandera=buscar(raiz,dato); 
+		if(bandera==1)
+		   printf("se encontro el %d\n",dato);
+		else
+		{
+		   printf("no se encontro el dato %d",dato);
+		}
+		printf("desea buscar otro dato\n1.....si  2.....no");
+		scanf("%d",&ops);
+	}
+
+    printf("que dato quiere borrar");
+    scanf("%d",&dato);
+    raiz=borrar_dato(raiz,dato)
+}
